@@ -1,0 +1,42 @@
+I"�<h2 id="the-idea">The Idea</h2>
+<p>For quite a while now, I’ve had thoughts of trying to design and implement custom ISA’s, programming languages, and even an OS. These ideas never made it much past the idea phase, and I have a number of half-baked project repos lurking on my github private to show for it.</p>
+
+<p>In late 2021, I decided to change my track record with this type of project. I wanted to try to loop all these previous ideas together, so I figured I’d try to design a custom ISA, write an emulator to run it on, and get to work on some sort of compiler for it.</p>
+
+<h2 id="the-architecture">The Architecture</h2>
+<p>I started off by designing a simple ISA with just the most basic functionality to get off the ground. The CPU supports an ISA that looks and works a lot like the 80186. For now, everything is 16 bit, with byte-addressable memory. It has x86-style stack and base pointers, 12 general purpose registers, and an x86 style %si and %di which should come in handy for arrays later. There isn’t really too much more to say for now, other than that it is almost certain to change as I develop the other parts of this project.</p>
+
+<h2 id="the-compiler">The Compiler</h2>
+<p>This has been my main area of focus so far. My main goal as of right now is to get this system to a state such that it can run some sort of UNIX-like operating system, and bootstrap its own compiler. Additionally, I want to build something from the ground up that follows a “standard” compilation pipeline.</p>
+
+<h2 id="language-features">Language Features</h2>
+<p>My desire to write some sort of operating system means that I am aiming to compile something similar to B or the original implementation of the C language. To get things off the ground, I’m working on a feature set closer to B - everything is typeless, meaning the only data being dealt with is machine words for now.</p>
+
+<p>Currently, I have expression and (very basic) arithmetic parsing up and running. I’m continually working on code generation and register allocation while I implement basic flow control. Once I get past this step, I plan to add arrays and pointers.</p>
+
+<p>It wouldn’t make much sense to have byte addressing capabilities if the machine will only ever run a language that deals in machine words. That’s why I also hope to implement a simple type system to make programming easier. As I explain later in the compiler phases overview, I have already laid a lot of groundwork that will hopefully enable me to transition to supporting different types when the time comes.</p>
+
+<h2 id="compiler-phases">Compiler Phases</h2>
+
+<h3 id="parsing">Parsing</h3>
+<p>The parser is a simple recursive descent type parser. It is able to use either one character or one token of lookahead to inform its next action. This has served very well so far. Look for a post with more details about the grammar for the language as the compiler nears completion. The parser builds an abstract syntax tree as it goes, and includes some very basic error detection, hopefully to be improved soon.</p>
+
+<h3 id="symbol-table-generation">Symbol Table Generation</h3>
+<p>Once the AST has been generated, symbol tables for the program and all its functions are generated. These tables contain information about variable/argument counts and names. Right now, it’s pretty overkill for the feature set, but it should make implementing types a whole lot easier when that time comes.</p>
+
+<h3 id="linearization-three-address-code-generation">“Linearization” (three-address code generation)</h3>
+<p>The critical thing about the symbol table is that each function entry contains a field for a block of three-address code (TAC). In this step, the AST is walked again, and collapsed down into a series of linear blocks. This step does a lot in terms of getting the program closer to assembly code.</p>
+
+<p>Its main functionality is to collapse all expressions by breaking them down and using temporary variables to hold in-progress pieces of larger expressions. Additionally, it evaluates the structure of if/else blocks. This includes generating the correct labels and jumps for each condition, as well as linearizing the code within the bodies of the statements.</p>
+
+<p>Even though only very basic arithmetic and the ‘if/else’ flow control exist right now, the machinery used in this step should be easily adaptable. This means that as I continue to add features, I should be able to use the existing framework to quickly expand out the feature set of the compiler.
+flow</p>
+<h3 id="lifetime-evaluation">Lifetime Evaluation</h3>
+<p>This step assigns lifetimes to variables in terms of their TAC indices. It uses a simple linear scan method to find when a variable is first and last used. This step also involves some checks on the variables that aren’t temporaries generated during linearization. This enables the compiler to enforce rules about assign-before-use and use-before-assign errors. This lifetime ass absolutely essential for register allocation during code generation.</p>
+
+<h3 id="target-code-generation">Target Code Generation</h3>
+<p>A lot of the complexity in figuring out what the output will look like falls to the linearization step. Once a function’s TAC block has been generated, reading that can give a pretty good idea of what the corresponding assembly is going to look like.</p>
+
+<p>Since the linearization step involves the use of arbitrary temporary variables, there is a good amount of work in keeping track of what values are where. Additionally, regardless of whether an ‘if’ or its ‘else’ are executed, the registers of the machine need to end up in the same state after the evaluation and execution of that statement. Similar problems will follow for other forms of flow control.</p>
+
+:ET

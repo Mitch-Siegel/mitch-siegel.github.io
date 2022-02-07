@@ -1,0 +1,25 @@
+I"�
+<h2 id="the-idea">The Idea</h2>
+<p>For quite a while now, I’ve had thoughts of trying to design and implement custom ISA’s, programming languages, and even an OS. These ideas never made it much past the idea phase, and I have a number of half-baked project repos lurking on my github private to show for it.</p>
+
+<p>In late 2021, I decided to change my track record with this type of project. I wanted to try to loop all these previous ideas together, so I figured I’d try to design a custom ISA, write an emulator to run it on, and get to work on some sort of compiler for it.</p>
+
+<h2 id="the-architecture">The Architecture</h2>
+<p>I started off by designing a simple ISA with just the most basic functionality to get off the ground. The CPU supports an ISA that looks and works a lot like the 80186. For now, everything is 16 bit, with byte-addressable memory. There isn’t really too much more to say for now, other than that it is almost certain to change as I develop the other parts of this project.</p>
+
+<h2 id="the-compiler">The Compiler</h2>
+<p>This has been my main area of focus so far. My main goal as of right now is to get this system to a state such that it can run some sort of UNIX-like operating system, and bootstrap its own compiler. Additionally, I want to build something from the ground up that follows a “standard” compilation pipeline.</p>
+
+<h3 id="language-features">Language Features</h3>
+<p>My desire to write some sort of operating system means that I am aiming to compile something similar to B or the original implementation of the C language. To start out, everything is typeless, meaning the only data being dealt with is machine words for now.</p>
+
+<p>Currently, I have gotten expression and (very basic) arithmetic parsing up and running. I’m continually working on code generation and register allocation while I implement basic flow control. Once I get past this step, I plan to add arrays and pointers.</p>
+
+<p>It wouldn’t make much sense to have byte addressing capabilities if the machine will only ever run a language that deals in machine words. That’s why I also hope to implement a simple type system to make programming easier. As I explain later in the compiler pipeline overview, I have already laid a lot of groundwork that will hopefully enable me to transition to supporting different types when the time comes.</p>
+
+<h3 id="compiler-pipeline">Compiler Pipeline</h3>
+
+<h4 id="parsing">Parsing</h4>
+<p>The parser is a simple recursive descent type parser. It is able to use either one character or one token of lookahead to inform its next action. This has served very well so far. Look for a post with more details about the grammar for the language as the compiler nears completion.</p>
+
+:ET
