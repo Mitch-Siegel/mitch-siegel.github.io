@@ -1,0 +1,3 @@
+I"�<h2 id="compiler-progress">Compiler Progress</h2>
+<p>Since the last post, I’ve upgraded every stage of the compilation pipeline to support the things necessary for flow control. At this point, if/else blocks and while loops are up and running almost perfectly. The main issue of keeping track of register states actually didn’t end up being quite as difficult as I expected it to be.</p>
+:ET

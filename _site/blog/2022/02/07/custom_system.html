@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Custom System - Beginnings</title>
+<meta name="generator" content="Jekyll v4.2.1" />
+<meta property="og:title" content="Custom System - Beginnings" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The Idea For quite a while now, I’ve had thoughts of trying to design and implement custom ISA’s, programming languages, and even an OS. These ideas never made it much past the idea phase, and I have a number of half-baked project repos lurking on my github private to show for it." />
+<meta property="og:description" content="The Idea For quite a while now, I’ve had thoughts of trying to design and implement custom ISA’s, programming languages, and even an OS. These ideas never made it much past the idea phase, and I have a number of half-baked project repos lurking on my github private to show for it." />
+<link rel="canonical" href="http://localhost:4000/blog/2022/02/07/custom_system.html" />
+<meta property="og:url" content="http://localhost:4000/blog/2022/02/07/custom_system.html" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-07T10:45:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Custom System - Beginnings" />
+<script type="application/ld+json">
+{"headline":"Custom System - Beginnings","dateModified":"2022-02-07T10:45:00-05:00","datePublished":"2022-02-07T10:45:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2022/02/07/custom_system.html"},"description":"The Idea For quite a while now, I’ve had thoughts of trying to design and implement custom ISA’s, programming languages, and even an OS. These ideas never made it much past the idea phase, and I have a number of half-baked project repos lurking on my github private to show for it.","url":"http://localhost:4000/blog/2022/02/07/custom_system.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+        
+        
+        <div class="trigger">
+          <a class="page-link" href="/">Back to Landing Page</a><a class="page-link" href="/blog">Blog Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Custom System - Beginnings</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2022-02-07T10:45:00-05:00" itemprop="datePublished">Feb 7, 2022
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="the-idea">The Idea</h2>
+<p>For quite a while now, I’ve had thoughts of trying to design and implement custom ISA’s, programming languages, and even an OS. These ideas never made it much past the idea phase, and I have a number of half-baked project repos lurking on my github private to show for it.</p>
+
+<p>In late 2021, I decided to change my track record with this type of project. I wanted to try to loop all these previous ideas together, so I figured I’d try to design a custom ISA, write an emulator to run it on, and get to work on some sort of compiler for it.</p>
+
+<h2 id="the-architecture">The Architecture</h2>
+<p>I started off by designing a simple ISA with just the most basic functionality to get off the ground. The CPU supports an ISA that looks and works a lot like the 80186. For now, everything is 16 bit, with byte-addressable memory. The biggest design feature to me is having a CPU that somewhat mirrors modern systems, with a hardware stack and some general purpose registers. There isn’t really too much more to say for now, other than that it is almost certain to change as I develop the other parts of this project.</p>
+
+<h2 id="the-compiler">The Compiler</h2>
+<p>This has been my main area of focus so far. My main goal as of right now is to get this system to a state such that it can run some sort of UNIX-like operating system, and bootstrap its own compiler. Additionally, I want to build something from the ground up that follows a “standard” compilation pipeline.</p>
+
+<h2 id="language-features">Language Features</h2>
+<p>My desire to write some sort of operating system means that I am aiming to compile something similar to B or the original implementation of the C language. To get things off the ground, I’m working on a feature set closer to B - everything is typeless, meaning the only data being dealt with is machine words for now.</p>
+
+<p>Currently, I have expression and (very basic) arithmetic parsing up and running. I’m continually working on code generation and register allocation while I implement basic flow control. Once I get past this step, I plan to add arrays and pointers.</p>
+
+<p>It wouldn’t make much sense to have byte addressing capabilities if the machine will only ever run a language that deals in machine words. That’s why I also hope to implement a simple type system to make programming easier. As I explain later in the compiler phases overview, I have already laid a lot of groundwork that will hopefully enable me to transition to supporting different types when the time comes.</p>
+
+<h2 id="compiler-phases">Compiler Phases</h2>
+
+<h3 id="parsing">Parsing</h3>
+<p>The parser is a simple recursive descent type parser. It is able to use either one character or one token of lookahead to inform its next action. This has served very well so far. Look for a post with more details about the grammar for the language as the compiler nears completion. The parser builds an abstract syntax tree as it goes, and includes some very basic error detection, hopefully to be improved soon.</p>
+
+<h3 id="symbol-table-generation">Symbol Table Generation</h3>
+<p>Once the AST has been generated, symbol tables for the program and all its functions are generated by walking it. These tables contain information about variable/argument counts and names. Right now, it’s pretty overkill for the feature set, but it should make implementing types a whole lot easier when that time comes.</p>
+
+<h3 id="linearization-three-address-code-generation">“Linearization” (three-address code generation)</h3>
+<p>The critical thing about the symbol table is that each function entry contains a field for a block of three-address code (TAC). In this step, the AST is walked again, and collapsed down into a series of linear blocks. This step does a lot in terms of getting the program closer to assembly code.</p>
+
+<p>Its main functionality is to collapse all expressions by breaking them down and using temporary variables to hold in-progress pieces of larger expressions. Additionally, it evaluates the structure of if/else blocks. This includes generating the correct labels and jumps for each condition, as well as linearizing the code within the bodies of the statements.</p>
+
+<p>Even though only very basic arithmetic and the ‘if/else’ flow control exist right now, the machinery used in this step should be easily adaptable. This means that as I continue to add features, I should be able to use the existing framework to quickly expand out the feature set of the compiler.</p>
+
+<h3 id="lifetime-evaluation">Lifetime Evaluation</h3>
+<p>This step assigns lifetimes to variables in terms of their TAC indices. It uses a simple linear scan method to find when a variable is first and last used. For all points in between, the variable is considered to be “live”. This step also involves some checks on the variables that aren’t temporaries generated during linearization. This enables the compiler to enforce rules about assign-before-declare and use-before-assign errors. This lifetime is absolutely essential for register allocation during code generation.</p>
+
+<h3 id="target-code-generation">Target Code Generation</h3>
+<p>A lot of the complexity in figuring out what the output will look like falls to the linearization step. Once a function’s TAC block has been generated, reading that can give a pretty good idea of what the corresponding assembly is going to look like. Code generation bridges the gap between three-address code and assembly.</p>
+
+<p>Since the linearization step involves the use of arbitrary temporary variables, there is a good amount of work in keeping track of what values are where. Additionally, regardless of whether an ‘if’ or its ‘else’ are executed, the registers of the machine need to end up in the same state after the evaluation and execution of that statement. Similar problems will follow for other features as they are implemented.</p>
+
+<p>This is the phase I’m currently working on. It’s taken a lot of rethinks and rewrites, but I think something close to a good solution is taking form as I continue to work on this. Realistically, this phase has always presented the largest and most difficult set of issues. Taking that in stride, things are coming along well, and I’m excited to write an update when I get a fully working version of everything (and then subsequently break it completely with new features).</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>All in all, things are moving along nicely with the compiler. I’m still not exactly sure what my vision is for the entire project, but that’s fine at this point. As I continue to develop the compiler and add features, I will gradually be able to shift my focus to those things. After I have some reasonably working code generation, adding new features should be much less of an effort, since all the starting pieces will already be in place. Then from there, I can start to think more about the architecture and what exactly I intend to do with it!</p>
+
+
+  </div><a class="u-url" href="/blog/2022/02/07/custom_system.html" hidden></a>
+</article>
+
+      </div>
+    </main></body>
+
+</html>
