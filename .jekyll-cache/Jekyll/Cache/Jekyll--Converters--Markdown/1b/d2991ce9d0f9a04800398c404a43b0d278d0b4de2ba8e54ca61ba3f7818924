@@ -1,0 +1,3 @@
+I"Ä<h2 id="cleaning-up-after-last-episode">Cleaning Up After Last Episode</h2>
+<p>In the previous update, I detailed how the entire middle and back end of the compiler fell apart. I had managed to get pointers working, but doing so exposed all the weaknesses in my naive first implementations of everything. Since then I have fixed up the IR to a much more capable form, reworked the entire code generator, and implemented proper register allocation.</p>
+:ET

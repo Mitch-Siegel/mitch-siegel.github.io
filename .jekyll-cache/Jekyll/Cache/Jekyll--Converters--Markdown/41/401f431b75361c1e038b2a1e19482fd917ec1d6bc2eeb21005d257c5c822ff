@@ -1,3 +1,0 @@
-I"–<h2 id="implementing-pointers">Implementing Pointers</h2>
-<p>Since last update, progress has been a bit slow, but Iâ€™ve managed to get very basic pointers up and running. Given that there is still only one type supported in the compiler, the basic implementation is fortunately able to mostly ignore (or just make assumptions about) data size. The main steps in implementing pointers were as follows:</p>
-:ET

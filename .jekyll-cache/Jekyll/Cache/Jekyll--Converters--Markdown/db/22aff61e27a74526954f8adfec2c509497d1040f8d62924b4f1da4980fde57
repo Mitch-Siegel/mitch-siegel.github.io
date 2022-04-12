@@ -1,0 +1,3 @@
+I"M<h2 id="implementing-pointers">Implementing Pointers</h2>
+<p>Since the last update, progress has been a bit slow, but I’ve managed to get very basic pointers up and running. The compiler still only supporting one data type makes things easier with regard to data width. The main steps in implementing pointers were as follows:</p>
+:ET
