@@ -38,7 +38,7 @@ Now that we've seen some simple tree representations of code, let's step it up a
 The first child of the "fun" node is the function name, with the function's argument type and name parameters as its children. All the other children of the function node are individual statements from the function body. The children are ordered exactly as they are parsed, with the earliest statement leftmost. It's interesting to see how deep the expression trees go, even for a relatively simple function!
 
 ### Say, What's the Register Allocator up To?
-Now that the register allocator is working properly, it's possible to see performance differences by increasing or decreasing the number of registers the allocator is allowed to use. This table lists out the number of instructions needed to the `firstnfibs()` function with an argument of 20. Naturally, with fewer registers to work with, more instructions are spent moving values back and forth between the stack and registers. 
+Now that the register allocator is working properly, it's possible to see performance differences by increasing or decreasing the number of registers the allocator is allowed to use. This table lists out the number of instructions needed to run the `firstnfibs()` function with an argument of 20. Naturally, with fewer registers to work with, more instructions are spent moving values back and forth between the stack and registers. 
 
 | Registers Enabled During Codegen | 3 | 4 | 5 | 6 |
 |-------|
