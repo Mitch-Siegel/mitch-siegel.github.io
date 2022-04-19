@@ -1,0 +1,2 @@
+I"<p>I am currently thinking a lot about what the next steps of this project are, and what that means for the direction of these posts. The compiler needs a good amount more work, but it’s finally starting to become usable. That means that before too long I need to start fleshing out the VM and hardware specs. In the meantime, there’s a lot of cleanup to do, and even more issues with regard to compiler ease-of-use and practicality. With that being said, I now have some concrete visuals and benchmarks for the compiler in general.</p>
+:ET

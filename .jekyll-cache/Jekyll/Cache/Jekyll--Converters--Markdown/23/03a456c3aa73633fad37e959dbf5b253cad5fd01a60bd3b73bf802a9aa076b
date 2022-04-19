@@ -1,0 +1,58 @@
+I"�<p>I am currently thinking a lot about what the next steps of this project are, and what that means for the direction of these posts. The compiler needs a good amount more work, but it’s finally starting to become usable. That means that before too long I need to start fleshing out the VM and hardware specs. In the meantime, there’s a lot of cleanup to do, and even more issues with regard to compiler ease-of-use and practicality. With that being said, I now have some concrete visuals and benchmarks for the compiler in general.</p>
+
+<h3 id="visualizing-the-syntax-tree">Visualizing the Syntax Tree</h3>
+<p>Over the past week I’ve been playing with graph visualization tools to try and generate an easily-digestible view of the compiler’s syntax tree. I ultimately ended up settling on a utility called <a href="https://graphviz.org/">graphviz</a>. It is an easy to use package which has incredible power and expressivity to generate all sorts of graphs. The key feature is that it can take input from a file in “DOT Language” containing info about nodes and edges, and then do all the heavy lifting and spit out an image file with the correct graph.</p>
+
+<p>In order to generate the graphs, I added a function that just walks the AST and serializes it node-by-node within the compiler. That output encodes information about each node’s type, text, child, and sibling. Then, I parse that file into a Java program that reconstructs the leftmost child/right sibling tree as it was in the compiler. From there, it refactors the tree so that each node can also know a full list of all of its children. From there, all that’s left to do is to generate some formatting parameters for nodes and edges, and simply spit them out in DOT format.</p>
+
+<h3 id="trees-for-simple-expressions">Trees for Simple Expressions</h3>
+
+<p>Here’s what the syntax trees look like for the expressions <code class="language-plaintext highlighter-rouge">var i = 0;</code> and <code class="language-plaintext highlighter-rouge">i = i + 1</code></p>
+
+<p><img src="/declaration-and-arithmetic-for-i.png" alt="declaration-and-arithmetic-for-i" /></p>
+
+<h3 id="trees-for-conditional-logic">Trees for Conditional Logic</h3>
+<p>For a simple if/else statement, here’s what things look like:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(i==2)
+    return 1;
+else
+    return i;
+</code></pre></div></div>
+
+<p><img src="/if-else_ast.png" alt="simple-if-else-ast" /></p>
+
+<h3 id="examining-an-entire-function">Examining an Entire Function</h3>
+
+<p>Now that we’ve seen some simple tree representations of code, let’s step it up a notch. Remember our old friend, <code class="language-plaintext highlighter-rouge">firstnfibs()</code>? It took an argument <code class="language-plaintext highlighter-rouge">n</code> and calculated the first <code class="language-plaintext highlighter-rouge">n</code> fibonacci numbers, placing them into an array at a hardcoded location in memory. Then, it looped over that array to print each number out. Here’s its AST graph - can you figure what each statement’s source code would roughly look like?</p>
+
+<p><img src="/firstnfibs_astgraph.png" alt="firstnfibs-ast-graph" /></p>
+
+<p>The first child of the “fun” node is the name, with the function’s argument type and name parameters as its children. All the other children of the function node are individual statements in the body of the function. The children are ordered exactly as they are parsed, the leftmost statement is the earliest.</p>
+
+<h3 id="say-whats-the-register-allocator-up-to">Say, What’s the Register Allocator up To?</h3>
+<p>Now that the register allocator is working properly, it’s possible to see performance differences by increasing or decreasing the number of registers the allocator is allowed to use. This table lists out the number of instructions needed to the <code class="language-plaintext highlighter-rouge">firstnfibs()</code> function with an argument of 20.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Number of Registers Enabled</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Number of Instructions Executed</td>
+      <td>1099</td>
+      <td>1056</td>
+      <td>940</td>
+      <td>883</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now that my journey out of “just-get-it-working-land” is continuing, I’d like to expand into some more rigorous performance profiling tools. It’s great to peek inside the compiler and see the AST, and I’d also like to figure out a way to see the basic blocks in the IR as well. In the future, I will also need to have access to information about the CPU as well, and what it’s really up to.</p>
+
+:ET
